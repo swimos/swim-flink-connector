@@ -1,0 +1,71 @@
+plugins {
+  id 'java-library'
+}
+
+group = 'org.swimos'
+description = 'Swim Flink Connector'
+version = property('application.version')
+ext.swimVersion = project.property('swim.version')
+sourceCompatibility = 11
+targetCompatibility = 11
+
+dependencies {
+  api group: 'org.swimos', name: 'swim-api', version: swimVersion
+  api group: 'org.swimos', name: 'swim-server', version: swimVersion
+  api group: 'org.swimos', name: 'swim-client', version: swimVersion
+  implementation group: 'org.apache.flink', name: 'flink-streaming-java', version: '1.17.0'
+  implementation group: 'org.apache.flink', name: 'flink-connector-base', version: '1.17.0'
+  testImplementation group: 'org.testng', name: 'testng', version: '7.7.0'
+}
+
+repositories {
+  mavenCentral()
+}
+
+compileJava {
+  options.compilerArgs += ['-Xlint:all']
+  options.encoding = 'UTF-8'
+}
+
+test {
+  useTestNG()
+  scanForTestClasses = false
+  include '**/*Spec.class'
+  maxHeapSize = '1024m'
+
+  testLogging {
+    events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+    exceptionFormat 'full'
+    displayGranularity = 4
+  }
+
+  outputs.upToDateWhen { false }
+}
+
+task copyPackage(type: Copy) {
+  from "package"
+  into "${buildDir}/swim-flink-connector/swim-flink-connector"
+}
+
+task copyLicense(type: Copy) {
+  from "."
+  include "LICENSE"
+  into "${buildDir}/swim-flink-connector/swim-flink-connector/doc"
+}
+
+task copyLibs(type: Copy) {
+  from project.tasks.jar.outputs
+  from configurations.runtimeClasspath
+  include "swim*.jar"
+  into "${buildDir}/swim-flink-connector/swim-flink-connector/lib"
+}
+
+task createFlinkConnectorPackage(type: Zip) {
+  mkdir "${buildDir}/swim-flink-connector/swim-flink-connector"
+  dependsOn copyPackage
+  dependsOn copyLicense
+  dependsOn copyLibs
+  archiveFileName = "swim-flink-connector.zip"
+  destinationDirectory = layout.buildDirectory.dir("${buildDir}")
+  from layout.buildDirectory.dir("${buildDir}/swim-flink-connector")
+}
