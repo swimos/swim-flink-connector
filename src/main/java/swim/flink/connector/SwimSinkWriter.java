@@ -4,6 +4,11 @@ import java.io.IOException;
 import org.apache.flink.api.connector.sink2.SinkWriter;
 import swim.client.ClientRuntime;
 
+/**
+ * Class responsible for sending incoming messages from Flink to a Swim application.
+ *
+ * @param <InputT> type of the records to be written to Swim application
+ */
 class SwimSinkWriter<InputT> implements SinkWriter<InputT> {
 
   private final UriProvider<InputT> hostUriProvider;

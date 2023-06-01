@@ -42,30 +42,3 @@ test {
   outputs.upToDateWhen { false }
 }
 
-task copyPackage(type: Copy) {
-  from "package"
-  into "${buildDir}/swim-flink-connector/swim-flink-connector"
-}
-
-task copyLicense(type: Copy) {
-  from "."
-  include "LICENSE"
-  into "${buildDir}/swim-flink-connector/swim-flink-connector/doc"
-}
-
-task copyLibs(type: Copy) {
-  from project.tasks.jar.outputs
-  from configurations.runtimeClasspath
-  include "swim*.jar"
-  into "${buildDir}/swim-flink-connector/swim-flink-connector/lib"
-}
-
-task createFlinkConnectorPackage(type: Zip) {
-  mkdir "${buildDir}/swim-flink-connector/swim-flink-connector"
-  dependsOn copyPackage
-  dependsOn copyLicense
-  dependsOn copyLibs
-  archiveFileName = "swim-flink-connector.zip"
-  destinationDirectory = layout.buildDirectory.dir("${buildDir}")
-  from layout.buildDirectory.dir("${buildDir}/swim-flink-connector")
-}
