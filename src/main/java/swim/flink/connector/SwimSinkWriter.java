@@ -29,6 +29,7 @@ class SwimSinkWriter<InputT> implements SinkWriter<InputT> {
     this.recordValueMolder = recordValueMolder;
 
     this.client = new ClientRuntime();
+    this.client.start();
   }
 
   @Override

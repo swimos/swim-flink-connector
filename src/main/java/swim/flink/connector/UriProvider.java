@@ -1,5 +1,6 @@
 package swim.flink.connector;
 
+import java.io.Serializable;
 import swim.uri.Uri;
 
 /**
@@ -7,7 +8,7 @@ import swim.uri.Uri;
  *
  * @param <InputT> the type of incoming records
  */
-interface UriProvider<InputT> {
+interface UriProvider<InputT> extends Serializable {
 
   /**
    * Construct uri from an incoming record.
@@ -23,7 +24,7 @@ interface UriProvider<InputT> {
    * @param <InputT> the type of incoming records
    */
   @FunctionalInterface
-  interface Function<InputT> {
+  interface Function<InputT> extends Serializable {
 
     /**
      * Construct a string from an incoming record, to be parsed into a uri.

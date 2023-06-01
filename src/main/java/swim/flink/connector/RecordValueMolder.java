@@ -1,5 +1,6 @@
 package swim.flink.connector;
 
+import java.io.Serializable;
 import swim.structure.Value;
 
 /**
@@ -9,7 +10,7 @@ import swim.structure.Value;
  * @param <InputT>> the type of incoming records to be molded
  */
 @FunctionalInterface
-public interface RecordValueMolder<InputT> {
+public interface RecordValueMolder<InputT> extends Serializable {
 
   /**
    * Mold input record to {@link swim.structure.Value}.

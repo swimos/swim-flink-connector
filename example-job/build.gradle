@@ -1,0 +1,63 @@
+plugins {
+    id 'java'
+    id 'application'
+    // shadow plugin to produce fat JARs
+    id 'com.github.johnrengelman.shadow' version '7.1.2'
+}
+
+group = 'org.swimos'
+description = 'Example Flink Job for Swim Flink Connector'
+version = property('swim.version')
+ext.swimVersion = project.property('swim.version')
+sourceCompatibility = 11
+targetCompatibility = 11
+mainClassName = 'example.ExampleFlinkJob'
+
+applicationDefaultJvmArgs = ["-Dlog4j.configurationFile=log4j2.properties"]
+
+repositories {
+    mavenCentral()
+}
+
+configurations {
+    flinkShadowJar
+
+    flinkShadowJar.exclude group: 'org.apache.flink', module: 'force-shading'
+    flinkShadowJar.exclude group: 'com.google.code.findbugs', module: 'jsr305'
+    flinkShadowJar.exclude group: 'org.slf4j'
+    flinkShadowJar.exclude group: 'org.apache.logging.log4j'
+}
+
+dependencies {
+
+    // Flink dependencies
+    implementation "org.apache.flink:flink-streaming-java:1.17.0"
+    implementation "org.apache.flink:flink-clients:1.17.0"
+
+    // Swim dependencies
+    implementation group: 'org.swimos', name: 'swim-flink-connector', version: swimVersion
+
+    // Dependencies that are required in the shadowJar
+    flinkShadowJar group: 'org.swimos', name: 'swim-flink-connector', version: swimVersion
+
+    runtimeOnly "org.apache.logging.log4j:log4j-slf4j-impl:2.17.1"
+    runtimeOnly "org.apache.logging.log4j:log4j-api:2.17.1"
+    runtimeOnly "org.apache.logging.log4j:log4j-core:2.17.1"
+}
+
+// make compileOnly dependencies available for tests:
+sourceSets {
+    main.compileClasspath += configurations.flinkShadowJar
+    main.runtimeClasspath += configurations.flinkShadowJar
+
+    test.compileClasspath += configurations.flinkShadowJar
+    test.runtimeClasspath += configurations.flinkShadowJar
+
+    javadoc.classpath += configurations.flinkShadowJar
+}
+
+run.classpath = sourceSets.main.runtimeClasspath
+
+shadowJar {
+    configurations = [project.configurations.flinkShadowJar]
+}

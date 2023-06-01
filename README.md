@@ -51,22 +51,10 @@ To send a message to a specific Web Agent, external systems (like the Swim Flink
 For a detailed overview of Swim concepts please refer to [swimos.org](https://www.swimos.org/concepts/)
 
 
-## Validating with the Test Application
-The Swim Flink Connector library can be validated by sending data to the test application in the [test-app/](test-app) directory. This can
-be done using the following steps
-
-### Run the Test Application
-The Test Application can be run from the Commandline or using a pre-built Docker Image. Using either of these methods, the
-application will start up and bind to port 9001.
-
-#### Use Commandline
-Go to the [test-app/](test-app) directory and execute the following command on the commandline.  
-For Linux/MacOS: `./gradlew run`  
-For Windows: `.\gradlew.bat run`
-
-#### Use Docker Image
-Go to the [test-app/](test-app) directory and build the docker image.
-Run the application using the following command: `docker run -p 9001:9001 test-app`
+## Validating with the Test Application and Example Job
+The Swim Flink Connector library can be validated by running the test application ([test-app](test-app)) alongside the
+([example-job](example-job)).
+See the [test-app](test-app/README.md) and [example-job](example-job/README.md) documentation to view how to run each respectively.
 
 ### Access the data from the Application
 Data sent to the Web Agents in the Test Application from the Swim Flink Connector library can be accessed using HTTP APIs.
@@ -95,4 +83,5 @@ If the Test Application is running on a different machine then the `<host-name>`
     - [main/java](src/main/java) — java source code
     - [main/resources](src/main/resources) — configuration files
     - [test](src/test)-unit test code
-- [test-app](test-app) — test Swim application which maybe used to validate the swim-flink-connector library
+- [test-app](test-app) — test Swim application which may be used to validate the swim-flink-connector library
+- [example-job](example-job) — example Flink job which may be used to validate the swim-flink-connector library

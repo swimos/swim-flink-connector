@@ -3,7 +3,6 @@ package swim.flink.connector;
 import java.io.IOException;
 import org.apache.flink.api.connector.sink2.Sink;
 import org.apache.flink.api.connector.sink2.SinkWriter;
-import swim.uri.Uri;
 
 /**
  * Flink Sink to send data into a Swim application.
@@ -88,17 +87,6 @@ public class SwimSink<InputT> implements Sink<InputT> {
     /**
      * Set the host uri.
      *
-     * @param hostUri
-     * @return {@link Builder}
-     */
-    public Builder<InputT> setHostUri(final Uri hostUri) {
-      this.hostUriProvider = new StaticUriProvider<>(hostUri);
-      return this;
-    }
-
-    /**
-     * Set the host uri.
-     *
      * @param hostUri a function to construct a uri based on the incoming record
      * @return {@link Builder}
      */
@@ -121,17 +109,6 @@ public class SwimSink<InputT> implements Sink<InputT> {
     /**
      * Set the node uri.
      *
-     * @param nodeUri
-     * @return {@link Builder}
-     */
-    public Builder<InputT> setNodeUri(final Uri nodeUri) {
-      this.nodeUriProvider = new StaticUriProvider<>(nodeUri);
-      return this;
-    }
-
-    /**
-     * Set the node uri.
-     *
      * @param nodeUri a function to construct a uri based on the incoming record
      * @return {@link Builder}
      */
@@ -147,17 +124,6 @@ public class SwimSink<InputT> implements Sink<InputT> {
      * @return {@link Builder}
      */
     public Builder<InputT> setLaneUri(final String laneUri) {
-      this.laneUriProvider = new StaticUriProvider<>(laneUri);
-      return this;
-    }
-
-    /**
-     * Set the lane uri.
-     *
-     * @param laneUri
-     * @return {@link Builder}
-     */
-    public Builder<InputT> setLaneUri(final Uri laneUri) {
       this.laneUriProvider = new StaticUriProvider<>(laneUri);
       return this;
     }

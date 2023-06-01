@@ -1,6 +1,6 @@
-# Test Swim Application
+# Example Flink Job
 
-A test Swim application to be used for verifying the Swim Flink Connector.
+An example Flink job to be used for verifying the Swim Flink Connector.
 
 ## Getting Started
 
@@ -10,7 +10,7 @@ A test Swim application to be used for verifying the Swim Flink Connector.
 - Ensure that your `JAVA_HOME` environment variable points to the Java installation.
 - Ensure that your `PATH` includes `$JAVA_HOME`.
 
-### Running the Application 
+### Running the Application
 
 #### On Windows
 
@@ -24,26 +24,25 @@ $ .\gradlew.bat run
 $ ./gradlew run
 ```
 
-This will start the Swim Plane ("Running Swim Plane ..." message should be displayed on the console). The Swim Plane
-will listen on port 9001 for incoming requests. The port number and the other configurations for the Swim Plane is 
-defined in the [src/main/resource/server.recon](src/main/resource/server.recon) file
+This will start a Flink job that generates random user data and relays that to a Swim application
+running on `localhost:9001`.
 
 ### Creating a Docker Package
 
 #### On Windows
 
 ```bash
-$ .\gradlew.bat createDockerPackage
+$ .\gradlew.bat shadowJar
 ```
 
 #### On Linux or MacOS
 
 ```bash
-$ ./gradlew createDockerPackage
+$ ./gradlew shadowJar
 ```
 
-This will create a Docker package in the [build/Docker](build/Docker) folder. Once built you can run the image with
-`docker run -p 9001:9001 test-app`.
+This will create a jar with all required dependencies at `build/libs/example-job-4.0.1-all.jar`. This jar can be submitted as a job to 
+a Flink cluster.
 
 
 ## Repository Structure
@@ -58,6 +57,4 @@ This will create a Docker package in the [build/Docker](build/Docker) folder. On
 
 - [src](src) — application source code
     - [main/java](src/main/java) — java source code for the application
-    - [main/resources](src/main/resources) — application configuration files
-- [docker](docker) — support files for generating Docker images
 - [gradle](gradle) — support files for the `gradlew` build script
