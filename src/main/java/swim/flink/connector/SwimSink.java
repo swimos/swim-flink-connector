@@ -1,6 +1,5 @@
 package swim.flink.connector;
 
-import java.io.IOException;
 import org.apache.flink.api.connector.sink2.Sink;
 import org.apache.flink.api.connector.sink2.SinkWriter;
 
@@ -11,6 +10,8 @@ import org.apache.flink.api.connector.sink2.SinkWriter;
  * @see Builder on how to construct a SwimSink
  */
 public class SwimSink<InputT> implements Sink<InputT> {
+
+  private static final long serialVersionUID = 1L;
 
   private final UriProvider<InputT> hostUriProvider;
   private final UriProvider<InputT> nodeUriProvider;
@@ -29,7 +30,7 @@ public class SwimSink<InputT> implements Sink<InputT> {
   }
 
   @Override
-  public SinkWriter<InputT> createWriter(InitContext context) throws IOException {
+  public SinkWriter<InputT> createWriter(InitContext context) {
     return new SwimSinkWriter<>(
             this.hostUriProvider,
             this.nodeUriProvider,
@@ -87,7 +88,7 @@ public class SwimSink<InputT> implements Sink<InputT> {
     /**
      * Set the host uri.
      *
-     * @param hostUri a function to construct a uri based on the incoming record
+     * @param hostUri a function to construct a URI based on the incoming record
      * @return {@link Builder}
      */
     public Builder<InputT> setHostUri(final UriProvider.Function<InputT> hostUri) {
@@ -109,7 +110,7 @@ public class SwimSink<InputT> implements Sink<InputT> {
     /**
      * Set the node uri.
      *
-     * @param nodeUri a function to construct a uri based on the incoming record
+     * @param nodeUri a function to construct a URI based on the incoming record
      * @return {@link Builder}
      */
     public Builder<InputT> setNodeUri(final UriProvider.Function<InputT> nodeUri) {
@@ -131,7 +132,7 @@ public class SwimSink<InputT> implements Sink<InputT> {
     /**
      * Set the lane uri.
      *
-     * @param laneUri a function to construct a uri based on the incoming record
+     * @param laneUri a function to construct a URI based on the incoming record
      * @return {@link Builder}
      */
     public Builder<InputT> setLaneUri(final UriProvider.Function<InputT> laneUri) {
@@ -140,7 +141,7 @@ public class SwimSink<InputT> implements Sink<InputT> {
     }
 
     /**
-     * Sets the {@link RecordValueMolder} that molds the incoming record into {@link
+     * Sets the {@link RecordValueMolder} that molds the incoming record into a {@link
      * swim.structure.Value}.
      *
      * @param recordValueMolder

@@ -27,7 +27,7 @@ $ ./gradlew run
 This will start a Flink job that generates random user data and relays that to a Swim application
 running on `localhost:9001`.
 
-### Creating a Docker Package
+### Creating a Flink Jar
 
 #### On Windows
 

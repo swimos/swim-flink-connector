@@ -1,6 +1,5 @@
 package swim.flink.connector;
 
-import java.io.IOException;
 import org.apache.flink.api.connector.sink2.SinkWriter;
 import swim.client.ClientRuntime;
 
@@ -33,7 +32,7 @@ class SwimSinkWriter<InputT> implements SinkWriter<InputT> {
   }
 
   @Override
-  public void write(InputT element, Context context) throws IOException, InterruptedException {
+  public void write(InputT element, Context context) {
     this.client.command(
             this.hostUriProvider.get(element),
             this.nodeUriProvider.get(element),
@@ -43,12 +42,12 @@ class SwimSinkWriter<InputT> implements SinkWriter<InputT> {
   }
 
   @Override
-  public void flush(boolean endOfInput) throws IOException, InterruptedException {
+  public void flush(boolean endOfInput) {
 
   }
 
   @Override
-  public void close() throws Exception {
+  public void close() {
     this.client.close();
   }
 

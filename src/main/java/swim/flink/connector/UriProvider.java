@@ -11,7 +11,7 @@ import swim.uri.Uri;
 interface UriProvider<InputT> extends Serializable {
 
   /**
-   * Construct uri from an incoming record.
+   * Construct a {@link swim.uri.Uri} from an incoming record.
    *
    * @param record
    * @return
@@ -19,7 +19,7 @@ interface UriProvider<InputT> extends Serializable {
   Uri get(final InputT record);
 
   /**
-   * A function for constructing a uri {@link String} from an incoming record.
+   * A function for constructing a URI {@link String} from an incoming record.
    *
    * @param <InputT> the type of incoming records
    */
@@ -27,7 +27,7 @@ interface UriProvider<InputT> extends Serializable {
   interface Function<InputT> extends Serializable {
 
     /**
-     * Construct a string from an incoming record, to be parsed into a uri.
+     * Construct a string from an incoming record, to be parsed into a {@link swim.uri.Uri}.
      *
      * @param record
      * @return
